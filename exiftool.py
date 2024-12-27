@@ -6,14 +6,16 @@ from pymediainfo import MediaInfo
 from rich.console import Console
 from rich.table import Table
 
-console = Console()
+console = Console() 
 
+# Reading
 def read_exif(file_path):
+    # Trying to read the EXIF Data
     try:
         img = Image.open(file_path)
         
         if img.format not in ["JPEG", "TIFF"]:
-            console.print(f"[bold yellow]EXIF data is not supported for {img.format} files.[/bold yellow]")
+            console.print(f"[bold yellow]EXIF data is not supported for {img.format} files.[/bold yellow]") 
             return None
         
         exif_bytes = img.info.get("exif", b"")
@@ -26,8 +28,8 @@ def read_exif(file_path):
     except Exception as e:
         console.print(f"[bold red]Error reading EXIF data: {e}[/bold red]")
         return None
-
 def extract_mediainfo_metadata(file_path):
+    # Try to Get the metainfo from the image file
     try:
         media_info = MediaInfo.parse(file_path)
         metadata = {}
@@ -39,6 +41,7 @@ def extract_mediainfo_metadata(file_path):
         console.print(f"[bold red]Error extracting MediaInfo metadata: {e}[/bold red]")
         return {}
 
+# Display MetaData
 def display_metadata(metadata, title):
     if not metadata:
         console.print(f"[bold yellow]No {title} metadata found.[/bold yellow]")
@@ -54,7 +57,7 @@ def display_metadata(metadata, title):
     console.print(table)
 
 def display_exif(exif_data):
-    """Display EXIF metadata in a table."""
+    # Display the EXIF & Meta Data
     if not exif_data or all(not data for data in exif_data.values()):
         console.print("[bold yellow]No EXIF metadata found in the file.[/bold yellow]")
         return
@@ -81,7 +84,7 @@ def display_exif(exif_data):
     
     console.print(table)
 
-
+# Stripping of the exif data from image file
 def strip_exif(file_path, output_path):
     try:
         img = Image.open(file_path)
