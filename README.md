@@ -99,4 +99,3 @@ python exiftool.py /home/user/Videos/sample.mp4 --mediainfo
 - **piexif**: EXIF handling in Python.
 - **Rich**: For rich-text output in the terminal.
 - **pymediainfo**: Media metadata extraction (optional).
-```
